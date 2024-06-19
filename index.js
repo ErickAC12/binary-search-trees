@@ -57,6 +57,70 @@ class Tree {
             ? this.find(value, node.left)
             : this.find(value, node.right);
     }
+
+    levelOrder(callback) {
+        if (!this.root) return [];
+        const queue = [this.root];
+        const results = [];
+        while (queue.length) {
+            let level = [];
+            let size = queue.length;
+            for (let i = 0; i < size; i++) {
+                const node = queue.shift();
+                level.push(node.key);
+                if (node.left) queue.push(node.left);
+                if (node.right) queue.push(node.right);
+                if (callback) callback(node);
+            }
+            results.push(level);
+        }
+        if (!callback) return results;
+    }
+
+    // left root right
+    inOrder(callback) {
+        if (!this.root) return [];
+        const stack = [this.root];
+        const results = [];
+        while (stack.length) {
+            const node = stack.pop();
+            if (node.left) stack.push(node.left);
+            if (callback) callback(node);
+            results.push(node.key);
+            if (node.right) stack.push(node.right);
+        }
+        return results;
+    }
+
+    // root left right
+    preOrder(callback) {
+        if (!this.root) return [];
+        const stack = [this.root];
+        const results = [];
+        while (stack.length) {
+            const node = stack.pop();
+            if (callback) callback(node);
+            results.push(node.key);
+            if (node.left) stack.push(node.left);
+            if (node.right) stack.push(node.right);
+        }
+        return results;
+    }
+
+    // left right root
+    postOrder(callback) {
+        if (!this.root) return [];
+        const stack = [this.root];
+        const results = [];
+        while (stack.length) {
+            const node = stack.pop();
+            if (node.left) stack.push(node.left);
+            if (node.right) stack.push(node.right);
+            if (callback) callback(node);
+            results.push(node.key);
+        }
+        return results;
+    }
 }
 
 const prettyPrint = (node, prefix = "", isLeft = true) => {
