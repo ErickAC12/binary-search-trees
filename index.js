@@ -27,6 +27,27 @@ class Tree {
         );
         return root;
     }
+
+    insert(value, root = this.root) {
+        if (root === null) return new Node(value);
+        root.key > value
+            ? root.left = this.insert(value, root.left)
+            : root.right = this.insert(value, root.right);
+        return root;
+    }
+
+    deleteItem(value, root = this.root) {
+        if (root === null) return root;
+        if (root.key > value) root.left = this.deleteItem(value, root.left);
+        else if (root.key < value) root.right = this.deleteItem(value, root.right);
+        else {
+            if (root.left === null) return root.right;
+            else if (root.right === null) return root.left;
+            root.key = this.minValue(root.right);
+            root.right = this.deleteItem(value, root.right);
+        }
+        return root;
+    }
 }
 
 const prettyPrint = (node, prefix = "", isLeft = true) => {
