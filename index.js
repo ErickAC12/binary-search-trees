@@ -48,6 +48,15 @@ class Tree {
         }
         return root;
     }
+
+    find(value, root = this.root) {
+        const node = root;
+        if (node === null) return null;
+        if (node.key === value) return node;
+        return node.key > value
+            ? this.find(value, node.left)
+            : this.find(value, node.right);
+    }
 }
 
 const prettyPrint = (node, prefix = "", isLeft = true) => {
