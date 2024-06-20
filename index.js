@@ -121,6 +121,16 @@ class Tree {
         }
         return results;
     }
+
+    height(node = this.root) {
+        if (node === null)
+            return -1;
+
+        const leftHeight = this.height(node.left);
+        const rightHeight = this.height(node.right);
+        
+        return Math.max(leftHeight, rightHeight) + 1;
+    }
 }
 
 const prettyPrint = (node, prefix = "", isLeft = true) => {
@@ -138,3 +148,4 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
 
 const tree = new Tree([1,2,3,4,5]);
 prettyPrint(tree.root);
+console.log(`Height of the tree is: ${tree.height()}`);
