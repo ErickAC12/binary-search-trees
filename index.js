@@ -131,6 +131,15 @@ class Tree {
         
         return Math.max(leftHeight, rightHeight) + 1;
     }
+
+    depth(node, root = this.root, level = 0) {
+        if (!node) return null;
+        if (root === null) return 0;
+        if (root.key === node.key) return level;
+        let count = this.depth(node, root.left, level + 1);
+        if (count !== 0) return count;
+        return this.depth(node, root.right, level + 1);
+    }
 }
 
 const prettyPrint = (node, prefix = "", isLeft = true) => {
@@ -149,3 +158,4 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
 const tree = new Tree([1,2,3,4,5]);
 prettyPrint(tree.root);
 console.log(`Height of the tree is: ${tree.height()}`);
+console.log(`Depth of node "4" is: ${tree.depth(new Node(4))}`)
