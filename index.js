@@ -140,6 +140,19 @@ class Tree {
         if (count !== 0) return count;
         return this.depth(node, root.right, level + 1);
     }
+
+    isBalanced(node = this.root) {
+        if (node === null) return true;
+        const heightDiff = Math.abs(
+            this.height(node.left) - this.height(node.right)
+        );
+        return (
+            heightDiff <= 1
+            && this.isBalanced(node.left)
+            && this.isBalanced(node.right)
+
+        );
+    }
 }
 
 const prettyPrint = (node, prefix = "", isLeft = true) => {
@@ -159,3 +172,4 @@ const tree = new Tree([1,2,3,4,5]);
 prettyPrint(tree.root);
 console.log(`Height of the tree is: ${tree.height()}`);
 console.log(`Depth of node "4" is: ${tree.depth(new Node(4))}`)
+console.log(tree.isBalanced());
