@@ -153,6 +153,12 @@ class Tree {
 
         );
     }
+
+    rebalance() {
+        if (this.root === null) return;
+        const sorted = [...new Set(this.inOrder().sort((a, b) => a - b))];
+        this.root = this.buildTree(sorted);
+    }
 }
 
 const prettyPrint = (node, prefix = "", isLeft = true) => {
